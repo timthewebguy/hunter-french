@@ -58,12 +58,9 @@ function initScrollSnap() {
 	lDate = Date.now();
 
 	//create the snapPoint objects
-	$$('.snap-point').forEach(function(s) {
+	$('.snap-point').forEach(function(s) {
 		snapPoints.push(new SnapPoint(s));
 	});
-
-	console.log(snapPoints);
-
 }
 
 function updateScrollSnap() {

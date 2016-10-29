@@ -463,3 +463,328 @@ function resizeAnimations() {
 
 }
 
+
+
+//requestAnimationFrame shim/polyfill
+window.requestAnimationFrame = ( function() {
+ return window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    function( callback ) {
+     window.setTimeout( callback, 1000 / 60 );
+    };
+})();
+
+//Application Master Functions
+;(function() {
+
+	// Page Load Function
+	function load() {
+		initAnimations();
+		initScrollSnap();
+
+		requestAnimationFrame(update);
+	}
+	window.addEventListener('load', load, false);
+
+
+	// Page Update Function 
+	function update() {
+		updateAnimations();
+		updateScrollSnap();
+
+		requestAnimationFrame(update);
+	}
+
+	// Page Resize Function 
+	function resize() {
+		resizeAnimations();
+		resizeScrollSnap();
+	}
+	window.addEventListener('resize', resize, false);
+
+	//Page Scroll Function
+	function scroll() {
+		scrollAnimations();
+		scrollScrollSnap();
+	}
+	window.addEventListener('scroll', scroll, false);
+
+
+})();
+
+/*! modernizr 3.3.1 (Custom Build) | MIT *
+ * https://modernizr.com/download/?-csstransforms-csstransforms3d-cssvhunit-preserve3d-setclasses !*/
+!function(e,t,n){function r(e,t){return typeof e===t}function s(){var e,t,n,s,i,o,a;for(var l in C)if(C.hasOwnProperty(l)){if(e=[],t=C[l],t.name&&(e.push(t.name.toLowerCase()),t.options&&t.options.aliases&&t.options.aliases.length))for(n=0;n<t.options.aliases.length;n++)e.push(t.options.aliases[n].toLowerCase());for(s=r(t.fn,"function")?t.fn():t.fn,i=0;i<e.length;i++)o=e[i],a=o.split("."),1===a.length?Modernizr[a[0]]=s:(!Modernizr[a[0]]||Modernizr[a[0]]instanceof Boolean||(Modernizr[a[0]]=new Boolean(Modernizr[a[0]])),Modernizr[a[0]][a[1]]=s),y.push((s?"":"no-")+a.join("-"))}}function i(e){var t=S.className,n=Modernizr._config.classPrefix||"";if(x&&(t=t.baseVal),Modernizr._config.enableJSClass){var r=new RegExp("(^|\\s)"+n+"no-js(\\s|$)");t=t.replace(r,"$1"+n+"js$2")}Modernizr._config.enableClasses&&(t+=" "+n+e.join(" "+n),x?S.className.baseVal=t:S.className=t)}function o(){return"function"!=typeof t.createElement?t.createElement(arguments[0]):x?t.createElementNS.call(t,"http://www.w3.org/2000/svg",arguments[0]):t.createElement.apply(t,arguments)}function a(){var e=t.body;return e||(e=o(x?"svg":"body"),e.fake=!0),e}function l(e,n,r,s){var i,l,f,d,u="modernizr",p=o("div"),c=a();if(parseInt(r,10))for(;r--;)f=o("div"),f.id=s?s[r]:u+(r+1),p.appendChild(f);return i=o("style"),i.type="text/css",i.id="s"+u,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(t.createTextNode(e)),p.id=u,c.fake&&(c.style.background="",c.style.overflow="hidden",d=S.style.overflow,S.style.overflow="hidden",S.appendChild(c)),l=n(p,e),c.fake?(c.parentNode.removeChild(c),S.style.overflow=d,S.offsetHeight):p.parentNode.removeChild(p),!!l}function f(e,t){return!!~(""+e).indexOf(t)}function d(e){return e.replace(/([a-z])-([a-z])/g,function(e,t,n){return t+n.toUpperCase()}).replace(/^-/,"")}function u(e,t){return function(){return e.apply(t,arguments)}}function p(e,t,n){var s;for(var i in e)if(e[i]in t)return n===!1?e[i]:(s=t[e[i]],r(s,"function")?u(s,n||t):s);return!1}function c(e){return e.replace(/([A-Z])/g,function(e,t){return"-"+t.toLowerCase()}).replace(/^ms-/,"-ms-")}function m(t,r){var s=t.length;if("CSS"in e&&"supports"in e.CSS){for(;s--;)if(e.CSS.supports(c(t[s]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];s--;)i.push("("+c(t[s])+":"+r+")");return i=i.join(" or "),l("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return n}function h(e,t,s,i){function a(){u&&(delete N.style,delete N.modElem)}if(i=r(i,"undefined")?!1:i,!r(s,"undefined")){var l=m(e,s);if(!r(l,"undefined"))return l}for(var u,p,c,h,g,v=["modernizr","tspan","samp"];!N.style&&v.length;)u=!0,N.modElem=o(v.shift()),N.style=N.modElem.style;for(c=e.length,p=0;c>p;p++)if(h=e[p],g=N.style[h],f(h,"-")&&(h=d(h)),N.style[h]!==n){if(i||r(s,"undefined"))return a(),"pfx"==t?h:!0;try{N.style[h]=s}catch(y){}if(N.style[h]!=g)return a(),"pfx"==t?h:!0}return a(),!1}function g(e,t,n,s,i){var o=e.charAt(0).toUpperCase()+e.slice(1),a=(e+" "+P.join(o+" ")+o).split(" ");return r(t,"string")||r(t,"undefined")?h(a,t,s,i):(a=(e+" "+k.join(o+" ")+o).split(" "),p(a,t,n))}function v(e,t,r){return g(e,n,n,t,r)}var y=[],C=[],w={_version:"3.3.1",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,t){var n=this;setTimeout(function(){t(n[e])},0)},addTest:function(e,t,n){C.push({name:e,fn:t,options:n})},addAsyncTest:function(e){C.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=w,Modernizr=new Modernizr;var S=t.documentElement,x="svg"===S.nodeName.toLowerCase(),_="CSS"in e&&"supports"in e.CSS,b="supportsCSS"in e;Modernizr.addTest("supports",_||b),Modernizr.addTest("preserve3d",function(){var e=o("a"),t=o("a");e.style.cssText="display: block; transform-style: preserve-3d; transform-origin: right; transform: rotateY(40deg);",t.style.cssText="display: block; width: 9px; height: 1px; background: #000; transform-origin: right; transform: rotateY(40deg);",e.appendChild(t),S.appendChild(e);var n=t.getBoundingClientRect();return S.removeChild(e),n.width&&n.width<4});var T=w.testStyles=l;T("#modernizr { height: 50vh; }",function(t){var n=parseInt(e.innerHeight/2,10),r=parseInt((e.getComputedStyle?getComputedStyle(t,null):t.currentStyle).height,10);Modernizr.addTest("cssvhunit",r==n)});var z="Moz O ms Webkit",P=w._config.usePrefixes?z.split(" "):[];w._cssomPrefixes=P;var k=w._config.usePrefixes?z.toLowerCase().split(" "):[];w._domPrefixes=k;var E={elem:o("modernizr")};Modernizr._q.push(function(){delete E.elem});var N={style:E.elem.style};Modernizr._q.unshift(function(){delete N.style}),w.testAllProps=g,w.testAllProps=v,Modernizr.addTest("csstransforms",function(){return-1===navigator.userAgent.indexOf("Android 2.")&&v("transform","scale(1)",!0)}),Modernizr.addTest("csstransforms3d",function(){var e=!!v("perspective","1px",!0),t=Modernizr._config.usePrefixes;if(e&&(!t||"webkitPerspective"in S.style)){var n,r="#modernizr{width:0;height:0}";Modernizr.supports?n="@supports (perspective: 1px)":(n="@media (transform-3d)",t&&(n+=",(-webkit-transform-3d)")),n+="{#modernizr{width:7px;height:18px;margin:0;padding:0;border:0}}",T(r+n,function(t){e=7===t.offsetWidth&&18===t.offsetHeight})}return e}),s(),i(y),delete w.addTest,delete w.addAsyncTest;for(var A=0;A<Modernizr._q.length;A++)Modernizr._q[A]();e.Modernizr=Modernizr}(window,document);
+
+/*
+	SYNTAX:		
+		<div class="snap-point" data-snap-target="top" data-snap-margin="30">
+			CONTENT
+		</div>
+*/
+
+var snapPoints = new Array();
+var target = null;
+var targetDist;
+var animationProgress = 0;
+var animationState = 1; //1 = idle, 2 = pending, 3 = animating, 4 = done
+
+var disableWidth = 400;
+var disabled = false;
+
+var snapDelay = 500;
+
+var lDate;
+var deltaTime;
+
+var scrolling = false;
+var scrollTimer;
+
+
+var SnapPoint = function(el) {
+
+	//The element
+	this.el = el;
+
+	//margin for snapping
+	this.snapMargin = parseFloat(this.el.getAttribute('data-snap-margin'));
+
+	//Point on the screen to track
+	var rect = this.el.getBoundingClientRect();
+	switch(this.el.getAttribute('data-snap-target')) {
+		case 'top':
+			this.snapTarget = window.pageYOffset + rect.top;
+			break;
+		case 'middle': 
+			this.snapTarget = window.pageYOffset + rect.top + window.innerHeight * 0.5;
+			break;
+		case 'bottom':
+			this.snapTarget = window.pageYOffset + rect.top + window.innerHeight;
+			break;
+	}
+	
+}
+
+
+function initScrollSnap() {
+
+	//Grab the height
+	resizeScrollSnap();
+
+	//setup for deltatime
+	lDate = Date.now();
+
+	//create the snapPoint objects
+	$('.snap-point').forEach(function(s) {
+		snapPoints.push(new SnapPoint(s));
+	});
+}
+
+function updateScrollSnap() {
+
+	//calculate deltaTime
+	deltaTime = (Date.now() - lDate) / 1000;
+
+	if(target == null) {
+		if(!scrolling) {
+			//find a new target in the array
+			for(var i = 0; i < snapPoints.length; i++) {
+				var p = snapPoints[i];
+				if(Math.abs(p.snapTarget - window.pageYOffset) < p.snapMargin) {
+					target = p;
+				}
+			}
+		}
+	} else {
+		//target acquired!
+		if(animationState == 1) {
+			if(!scrolling) {
+				//set state to 2 (pending)
+				setTimeout(function() {
+					if(!scrolling) {
+
+						//set state to 3 (ready!)
+						animationState = 3;
+
+						//set the inital target distance
+						targetDist = target.snapTarget - window.pageYOffset;
+					} else {
+						//abort, go back to searching
+						animationState = 1;
+						target = null;
+					}
+				}, snapDelay);
+				//pending
+				animationState = 2;
+			} else {
+				target = null;
+			}
+		}
+
+		//ready to animate
+		if(animationState == 3) {
+
+			//increase animation progress
+			animationProgress += deltaTime * 3;
+
+			//apply easing
+			var ap = animationProgress;
+			ap = (Math.pow((ap-1), 3) +1);
+
+			//scroll
+			window.scrollTo(0, target.snapTarget - targetDist * (1 - ap));
+
+			if(animationProgress >= 1) {//animation finished
+
+				//lock to the endpoint just in case the math was a bit off
+				window.scrollTo(0, target.snapTarget);
+
+				//finished
+				animationState = 4;
+
+				onSnap();
+			}
+		}
+	}
+
+	//for deltatime
+	lDate = Date.now();
+
+}
+
+//event to fire when snap finishes
+function onSnap() {
+	//history.pushState(null, null, '/' + target.el.getAttribute('id'));
+}
+
+
+function resizeScrollSnap() {
+
+	//update the target points of all of the snap points
+	snapPoints.forEach(function(p) {
+		
+		//client rect of the element
+		var rect = p.el.getBoundingClientRect();		
+
+		//Point on the screen to track
+		switch(p.el.getAttribute('data-snap-target')) {
+			case 'top':
+				p.snapTarget = window.pageYOffset + rect.top;
+				break;
+			case 'middle': 
+				p.snapTarget = window.pageYOffset + rect.top + window.innerHeight * 0.5;
+				break;
+			case 'bottom':
+				p.snapTarget = window.pageYOffset + rect.top + window.innerHeight;
+				break;
+		}
+	});
+
+
+}
+
+function scrollScrollSnap() {
+
+	if(animationState == 4) {//the animation is finished
+
+		//set back to idle
+		animationState = 1;
+
+		//reset other parameters
+		animationProgress = 0;
+		target = null;
+	}
+
+	//we are indeed scrolling
+	scrolling = true;
+
+	//reset timer to check when we're not scrolling
+	clearTimeout(scrollTimer);
+	scrollTimer = setTimeout(function() { scrolling = false }, 100);
+}
+
+
+function $(sel) {
+	var query = document.querySelectorAll(sel);
+	if(query.length == 1) {
+		return query.item(0);
+	} else {
+		return query;
+	}
+}
+
+Element.prototype.nodeNumber = function() {
+	var el = this, node=0;
+	while( (el = el.previousElementSibling) != null) {
+		node++;
+	}
+	return node;
+};
+
+Element.prototype.isBefore = function(el) {
+	if(this.parentNode != el.parentNode) {
+		console.log('not the same parent');
+		return false;
+	}
+	if(this.nodeNumber() > el.nodeNumber()) {
+		return false;
+	}
+	return true;
+};
+
+Element.prototype.addClass = function(_class) {
+	if(this.classList) {
+		this.classList.add(_class);
+		return this;
+	} else {
+		var classes = this.className.split(' ');
+		if(classes.indexOf(classToAdd) === -1) {
+			this.className = this.className + (classes.length > 0 ? ' ' : '') + classToAdd;
+		}
+		return this;
+	}
+};
+
+Element.prototype.removeClass = function(_class) {
+	if(this.classList) {
+		this.classList.remove(_class);
+		return this;
+	} else {
+		var finalClassName = '';
+		this.className.split(' ').forEach(function(cl) {
+			if(cl != _class) { finalClassName += cl + ' ' }
+		});
+		this.className = finalClassName.replace(/[ /t]+$/, '');
+		return this;	
+	}
+};
+
+Element.prototype.hasClass = function(_class) {
+	if(this.classList) {
+		return this.classList.contains(_class);
+	} else {
+		return this.className.split(' ').indexOf(_class) != -1;
+	}
+};
+
+Element.prototype.loop = function(func) {
+	func(this);
+};
+
+NodeList.prototype.addEventListener = function(event, callback, capture) {
+	this.loop(function (n) {
+		n.addEventListener(event, callback, capture || false);
+	});
+};
+NodeList.prototype.removeEventListener = function(event, callback, capture) {
+	this.loop(function (n) {
+		n.removeEventListener(event, callback, capture || false);
+	});
+};
+NodeList.prototype.loop = function(func) {
+	for(var i = 0; i < this.length; i++) {
+		func(this.item(i));
+	}
+};
+
