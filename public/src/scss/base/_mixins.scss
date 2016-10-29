@@ -1,0 +1,19 @@
+@mixin breakpoint-font-size($tablet-size, $tablet-large-size, $desktop-size) {
+	@media screen and (min-width:$tablet) {
+		font-size:$tablet-size;
+	}
+	@media screen and (min-width:$tablet-large) {
+		font-size:$tablet-large-size;
+	}
+	@media screen and (min-width:$desktop) {
+		font-size:$desktop-size;
+	}
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

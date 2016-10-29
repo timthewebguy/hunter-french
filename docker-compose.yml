@@ -1,0 +1,9 @@
+# PHP Web Server
+apache:
+  container_name: hunter-french-apache
+  build: .
+  ports:
+    - "8000:80"
+  volumes:
+    - ./public:/var/www/html
+  restart: always

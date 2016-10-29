@@ -1,0 +1,41 @@
+
+html {
+	font-family: ProximaNova;
+	font-weight:500;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight:900;
+}
+
+strong {
+	font-weight:700;
+}
+
+@each $color, $name in $all-colors {
+	.text-#{$name} {
+		color:$color;
+	}
+}
+
+.shadow {
+	text-transform: uppercase;
+  display: inline;
+  line-height: 1.6em;
+  border: 0 solid;
+  box-decoration-break: clone;
+
+  $x-offset : 0.2em;
+  $y-offset : 0em;
+  margin:0 $x-offset;
+	@each $color, $name in $all-colors {
+		&.#{$name} {
+			background-color: $color;
+			box-shadow:#{$x-offset} 0 0 $color, 
+                 #{$x-offset * -1} 0 0 $color, 
+                 0 -#{$y-offset} 0 $color, 
+                 #{$x-offset * -1} #{$y-offset * -1} 0 $color, 
+                 #{$x-offset} #{$y-offset * -1} 0 $color;
+		}
+	}
+}

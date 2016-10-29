@@ -1,0 +1,27 @@
+// Variables go here
+
+$mobile : 37.9999em;
+$tablet : 38em;
+$tablet-large : 48em;
+$desktop : 62em;
+
+$blue : rgb(13, 34, 63);
+$light-blue : rgb(0, 67, 105);
+
+$grey : rgb(125, 134, 140);
+$light-grey : rgb(188, 192, 195);
+
+$teal : rgb(0, 117, 132);
+$light-teal : rgb(121, 175, 186);
+
+$cyan : rgb(83, 213, 211);
+$light-cyan : rgb(151,216, 218);
+
+$red : rgb(189, 44, 46);
+$orange : rgb(239, 106, 33);
+$yellow : rgb(255, 218, 48);
+
+$uconn-blue : #01062c;
+
+
+$all-colors : (($blue, blue), ($light-blue, light-blue), ($grey, grey), ($light-grey, light-grey), ($teal, teal), ($light-teal, light-teal), ($cyan, cyan), ($light-cyan, light-cyan), ($red, red), ($orange, orange), ($yellow, yellow), (white, white));
