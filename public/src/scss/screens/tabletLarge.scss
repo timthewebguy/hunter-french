@@ -1,0 +1,49 @@
+
+$tileSize : 10em;
+
+.tiles {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100vw;
+	height:100vh;
+	perspective:300px;
+	overflow:scroll;
+	-webkit-overflow-scrolling:touch;
+	overflow:hidden;
+}
+
+.tile {
+	position:fixed;
+	top:50%;
+	left:50%;
+	opacity:0.5;
+	margin:0;
+	will-change:transform;
+}
+
+.tile__inner {
+	position:absolute;
+	//filter:grayscale(100%);
+	//transition:filter 0.2s ease;
+
+	&:hover {
+		filter:grayscale(0%);
+	}
+}
+
+.tile__img {
+	position:absolute;
+	top:50%;
+	left:50%;
+	width:$tileSize;
+	height:auto;
+	box-sizing:border-box;
+	border:0.1em solid black;
+	transition:transform 0.2s ease;
+}
+
+.tile__trigger {
+	width:100vw;
+	height:15vh;
+}

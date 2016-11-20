@@ -3,8 +3,10 @@
 
 @import 'base/normalize';
 @import 'base/font';
-
 @import 'base/global';
+
+@import 'base/tile';
+
 @import 'base/utilities';
 
 @media screen and (max-width: $mobile) {

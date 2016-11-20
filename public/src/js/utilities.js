@@ -1,6 +1,7 @@
 
-function $(sel) {
-	var query = document.querySelectorAll(sel);
+function $(sel, ctx) {
+	var context = ctx || document;
+	var query = context.querySelectorAll(sel);
 	if(query.length == 1) {
 		return query.item(0);
 	} else {
