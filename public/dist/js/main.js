@@ -328,6 +328,8 @@ var DataScroll = function(root, options) {
 	this.ease = options.ease || 'ease';
 	this.round = options.round || false;
 
+	this.enabled = options.enabled || true;
+
 	this.height = this.calcHeight();
 	if(this.debug) {
 		console.log('Page Height:', this.height);
@@ -532,7 +534,9 @@ DataScroll.prototype.addAnimation = function(panel, el, target, animationString,
 
 
 DataScroll.prototype.update = function() {
-
+	if (!this.enabled) {
+		return;
+	}
 	//Store the current y for the page in %
 	this.currentY = this.scrollY() / this.height * this.scrollRatio;
 
@@ -563,6 +567,23 @@ DataScroll.prototype.resize = function() {
 	});
 };
 
+DataScroll.prototype.enable = function() {
+	this.enabled = true;
+	this.animations.forEach(function(a) {
+		a.render(0, 'init');
+		a.render(this.currentY, 'update');
+	});
+	requestAnimationFrame(this.update.bind(this));
+};
+
+DataScroll.prototype.disable = function() {
+	this.enabled = false;
+
+	this.animations.forEach(function(a) {
+		a.target.style[a.animationAttribute] = '';
+	});
+};
+
 //requestAnimationFrame shim/polyfill
 window.requestAnimationFrame = ( function() {
 return window.requestAnimationFrame ||
@@ -576,12 +597,13 @@ return window.requestAnimationFrame ||
 
 //Application Master Functions
 ;(function() {
+	var ds;
 
 	// Page Load Function
 	function load() {
 
 		var index = 999;
-		var ds = new DataScroll(document.body);
+		ds = new DataScroll(document.body);
 
 		var lastAngle = 0;
 
@@ -638,6 +660,17 @@ return window.requestAnimationFrame ||
 
 	}
 	window.addEventListener('load', load, false);
+
+function resize() {
+		if(window.innerWidth <= 768 && ds.enabled == true) {
+			ds.disable();
+		}
+		if(window.innerWidth > 768 && ds.enabled == false) {
+			ds.enable();
+		}
+	}
+
+	window.addEventListener('resize', resize, false);
 
 
 })();

@@ -1,12 +1,13 @@
 
 //Application Master Functions
 ;(function() {
+	var ds;
 
 	// Page Load Function
 	function load() {
 
 		var index = 999;
-		var ds = new DataScroll(document.body);
+		ds = new DataScroll(document.body);
 
 		var lastAngle = 0;
 
@@ -63,6 +64,17 @@
 
 	}
 	window.addEventListener('load', load, false);
+
+function resize() {
+		if(window.innerWidth <= 768 && ds.enabled == true) {
+			ds.disable();
+		}
+		if(window.innerWidth > 768 && ds.enabled == false) {
+			ds.enable();
+		}
+	}
+
+	window.addEventListener('resize', resize, false);
 
 
 })();

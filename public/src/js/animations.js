@@ -328,6 +328,8 @@ var DataScroll = function(root, options) {
 	this.ease = options.ease || 'ease';
 	this.round = options.round || false;
 
+	this.enabled = options.enabled || true;
+
 	this.height = this.calcHeight();
 	if(this.debug) {
 		console.log('Page Height:', this.height);
@@ -532,7 +534,9 @@ DataScroll.prototype.addAnimation = function(panel, el, target, animationString,
 
 
 DataScroll.prototype.update = function() {
-
+	if (!this.enabled) {
+		return;
+	}
 	//Store the current y for the page in %
 	this.currentY = this.scrollY() / this.height * this.scrollRatio;
 
@@ -560,6 +564,23 @@ DataScroll.prototype.resize = function() {
 	//recalculate animation start and duration values
 	this.animations.forEach(function(a) {
 		reference.transformAnimation(a.panel, a);
+	});
+};
+
+DataScroll.prototype.enable = function() {
+	this.enabled = true;
+	this.animations.forEach(function(a) {
+		a.render(0, 'init');
+		a.render(this.currentY, 'update');
+	});
+	requestAnimationFrame(this.update.bind(this));
+};
+
+DataScroll.prototype.disable = function() {
+	this.enabled = false;
+
+	this.animations.forEach(function(a) {
+		a.target.style[a.animationAttribute] = '';
 	});
 };
 
